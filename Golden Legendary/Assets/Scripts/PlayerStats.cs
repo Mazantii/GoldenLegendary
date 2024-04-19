@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,30 @@ public class PlayerStats : MonoBehaviour
     public float CritRate = 0f;
     public int CritDamage = 2;
 
+    public List<RangeWeaponScript> currentWeapons;
+    private Transform firePoint;
+
+
     void Start()
     {
-        
-
+        //Find the script with the player Stats
+        firePoint = transform;
+        foreach (var weapon in currentWeapons)
+            {
+                weapon.Shoot(firePoint);
+                StartCoroutine(ShootRepeatedly());
+            }
+    }
+        IEnumerator ShootRepeatedly()
+    {
+        while (true)
+        {
+            foreach (var weapon in currentWeapons)
+            {
+                weapon.Shoot(firePoint);
+                yield return new WaitForSeconds(1f / weapon.fireRate);
+            }
+        }
     }
 
     // Update is called once per frame

@@ -388,7 +388,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
 --- !u!114 &1023062959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,6 +409,9 @@ MonoBehaviour:
   dodgeRate: 0
   CritRate: 0
   CritDamage: 2
+  currentWeapons:
+  - {fileID: 11400000, guid: d15f7e400fba2f24aaca570c33c88b3e, type: 2}
+  - {fileID: 11400000, guid: 87f6b3dd3a3a4b34483230c844151c75, type: 2}
 --- !u!1 &1318783720
 GameObject:
   m_ObjectHideFlags: 0
