@@ -389,6 +389,26 @@ MonoBehaviour:
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1023062959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023062952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad05ec8976796da4db2cac23e0f8465d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 1
+  fireRate: 1
+  speed: 5
+  dodgeRate: 0
+  CritRate: 0
+  CritDamage: 2
 --- !u!1 &1318783720
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +555,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8923326586631335135, guid: 4b2a6ee6b0cce3249b28c42fdf141389, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1023062956}
+    - targetCorrespondingSourceObject: {fileID: 8923326586631335135, guid: 4b2a6ee6b0cce3249b28c42fdf141389, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1023062959}
   m_SourcePrefab: {fileID: 100100000, guid: 4b2a6ee6b0cce3249b28c42fdf141389, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
