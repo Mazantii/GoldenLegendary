@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerInput playerInput;
     InputAction movement;
 
+
     //player stats
     PlayerStats playerStats;
 
@@ -18,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Find the script with the player Stats
         playerStats = GetComponent<PlayerStats>();
-
         
     }
 
@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     void MovePLayer()
     {
         Vector2 move = movement.ReadValue<Vector2>();
+
         transform.position += new Vector3(move.x, move.y, 0) * playerStats.speed * Time.deltaTime;
     }
 
