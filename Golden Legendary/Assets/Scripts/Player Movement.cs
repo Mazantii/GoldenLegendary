@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    PlayerInput playerInput;
+    InputAction movement;
+
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
+        movement = playerInput.actions["Move"];
+
+        //Find the script with the player Stats
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        MovePLayer();
     }
+
+    void MovePLayer()
+    {
+        Vector2 move = movement.ReadValue<Vector2>();
+        transform.position += new Vector3(move.x, move.y, 0) * Time.deltaTime;
+    }
+
 }
