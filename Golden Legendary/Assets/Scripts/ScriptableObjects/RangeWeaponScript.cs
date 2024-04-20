@@ -71,5 +71,10 @@ public class RangeWeaponScript : ScriptableObject
     bulletScript.damage = damage;
     bulletScript.criticalChance = criticalChance;
     bulletScript.criticalMultiplier = criticalMultiplier;
+    bulletScript.explosive = explosive;
+    bulletScript.piercing = piercing;
+    bulletScript.chaining = chaining;
+    bulletScript.hooming = hooming;
+    bulletScript.scatter = scatter;
 }
 }

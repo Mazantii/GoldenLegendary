@@ -16,12 +16,12 @@ MonoBehaviour:
   weaponName: bow
   damage: 1
   fireRate: 1
-  bulletSpeed: 2
+  bulletSpeed: 4
   bulletLifeTime: 3
   criticalChance: 1
   criticalMultiplier: 1
-  explosive: 0
-  piercing: 1
+  explosive: 1
+  piercing: 0
   chaining: 0
   hooming: 0
   scatter: 0
