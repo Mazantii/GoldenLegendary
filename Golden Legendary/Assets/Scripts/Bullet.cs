@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 
     //effect that bullet can have
     public bool explosive, piercing, chaining, hooming, scatter;
+    
 
 
     // Start is called before the first frame update
@@ -24,15 +25,23 @@ public class Bullet : MonoBehaviour
         
     }
     
-    //deals damage to the enemy
+    //if coliision with enemy, deal damage
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        /*Enemy enemy = hitInfo.GetComponent<Enemy>();
+        EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            enemy.health -= damage;	
         }
-        Destroy(gameObject);*/
+        
+        //if piercing, keep going
+        if (piercing)
+        {
+            return;
+        }
+        else{
+            Destroy(gameObject);
+        }
     }
 
     void Explosive()
@@ -43,6 +52,7 @@ public class Bullet : MonoBehaviour
     void Piercing()
     {
         //piercing effect
+        
     }
 
     void Chaining()

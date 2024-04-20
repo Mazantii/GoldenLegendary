@@ -459,8 +459,7 @@ MonoBehaviour:
   CritDamage: 2
   currentRangedWeapons:
   - {fileID: 11400000, guid: 9daa90308f4db80418d5a7e9c58920c4, type: 2}
-  currentMeleeWeapons:
-  - {fileID: 11400000, guid: 648667cfe94a71b45a8799ab27274970, type: 2}
+  currentMeleeWeapons: []
 --- !u!1 &1318783720
 GameObject:
   m_ObjectHideFlags: 0
