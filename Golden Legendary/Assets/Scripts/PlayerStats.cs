@@ -15,13 +15,20 @@ public class PlayerStats : MonoBehaviour
     public float CritRate = 0f;
     public int CritDamage = 2;
 
+    //list with strings
+    public List<string> blessings = new List<string>();
+    public List<string> curses = new List<string>();
+
     public List<RangeWeaponScript> currentRangedWeapons;
     public List<MeleeWeaponScript> currentMeleeWeapons;
     private Transform firePoint;
 
+    public static PlayerStats instance;
+
 
     void Start()
     {
+        instance = this;
         //Find the script with the player Stats
         firePoint = transform;
         foreach (var weapon in currentRangedWeapons)
