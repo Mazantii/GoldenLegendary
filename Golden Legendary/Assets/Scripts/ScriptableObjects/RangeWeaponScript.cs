@@ -11,7 +11,7 @@ public class RangeWeaponScript : ScriptableObject
 
     void Awake()
     {
-        bulletPrefab = Resources.Load<GameObject>("Assets/Prefabs/BulletPrefab");
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletPrefab");
     }
 
     //stats for the ranged weapon

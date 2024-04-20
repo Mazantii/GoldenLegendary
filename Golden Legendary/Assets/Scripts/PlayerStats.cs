@@ -15,7 +15,8 @@ public class PlayerStats : MonoBehaviour
     public float CritRate = 0f;
     public int CritDamage = 2;
 
-    public List<RangeWeaponScript> currentWeapons;
+    public List<RangeWeaponScript> currentRangedWeapons;
+    public List<MeleeWeaponScript> currentMeleeWeapons;
     private Transform firePoint;
 
 
@@ -23,20 +24,36 @@ public class PlayerStats : MonoBehaviour
     {
         //Find the script with the player Stats
         firePoint = transform;
-        foreach (var weapon in currentWeapons)
+        foreach (var weapon in currentRangedWeapons)
             {
                 weapon.Shoot(firePoint);
                 StartCoroutine(ShootRepeatedly());
             }
+         foreach (var weapon in currentMeleeWeapons)
+            {
+                weapon.Attack(firePoint);
+                StartCoroutine(StabRepeatedly());
+            }
     }
-        IEnumerator ShootRepeatedly()
+    IEnumerator ShootRepeatedly()
     {
         while (true)
         {
-            foreach (var weapon in currentWeapons)
+            foreach (var weapon in currentRangedWeapons)
             {
                 weapon.Shoot(firePoint);
                 yield return new WaitForSeconds(1f / weapon.fireRate);
+            }
+        }
+    }
+        IEnumerator StabRepeatedly()
+    {
+        while (true)
+        {
+            foreach (var weapon in currentMeleeWeapons)
+            {
+                weapon.Attack(firePoint);
+                yield return new WaitForSeconds(1f / weapon.attackRate);
             }
         }
     }

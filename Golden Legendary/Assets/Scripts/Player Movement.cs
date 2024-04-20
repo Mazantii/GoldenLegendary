@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     //player stats
     PlayerStats playerStats;
 
+    //Vector2 to store the last move direction
+    Vector2 lastMoveDirection;
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -31,7 +34,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 move = movement.ReadValue<Vector2>();
 
+        if (move != Vector2.zero)
+        {
+            lastMoveDirection = move;
+        }
+
         transform.position += new Vector3(move.x, move.y, 0) * playerStats.speed * Time.deltaTime;
+    }
+
+    public Vector2 GetLastMoveDirection()
+    {
+        return lastMoveDirection;
     }
 
 }
