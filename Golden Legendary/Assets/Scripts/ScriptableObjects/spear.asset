@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f32b1968a709294dae80026b9077ff8, type: 3}
   m_Name: spear
   m_EditorClassIdentifier: 
-  stabPrefab: {fileID: 0}
+  stabPrefab: {fileID: 4197692761311715384, guid: 34aaf5935071e8f488d5e8d07138cd9e, type: 3}
   weaponName: spear
   damage: 1
-  attackRate: 1
+  attackRate: 6
   criticalChance: 1
   criticalMultiplier: 1
   explosive: 0
