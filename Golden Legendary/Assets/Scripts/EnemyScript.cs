@@ -10,10 +10,13 @@ public class EnemyScript : MonoBehaviour
     public float points;
     public float critChance;
 
+    public GameObject target;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        target = GameObject.FindGameObjectWithTag("Player");
+        MoveTowardsPlayer();
     }
 
     // Update is called once per frame
@@ -25,22 +28,6 @@ public class EnemyScript : MonoBehaviour
     //Function to walk towards the player 
     public void MoveTowardsPlayer()
     {
-        //get the player position
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-        //if the player is found debug.log it
-        if (playerPosition != null)
-        {
-            Debug.Log("Player found");
-        }
-
-        //get the direction to the player
-        Vector3 direction = playerPosition - transform.position;
-
-        //normalize the direction
-        direction.Normalize();
-
-        //move towards the player
-        transform.position += direction * speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
 }
