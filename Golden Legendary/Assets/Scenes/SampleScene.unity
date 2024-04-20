@@ -459,7 +459,9 @@ MonoBehaviour:
   dodgeRate: 0
   CritRate: 0
   CritDamage: 2
-  currentWeapons: []
+  currentRangedWeapons:
+  - {fileID: 11400000, guid: 9daa90308f4db80418d5a7e9c58920c4, type: 2}
+  currentMeleeWeapons: []
 --- !u!1 &1318783720
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,6 +609,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4788830528414944978, guid: edd725751c3c0a648bd055822a8c5836, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 6200708513626743250, guid: edd725751c3c0a648bd055822a8c5836, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.306827
@@ -646,6 +652,10 @@ PrefabInstance:
     - target: {fileID: 6200708513626743250, guid: edd725751c3c0a648bd055822a8c5836, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7402909396468807939, guid: edd725751c3c0a648bd055822a8c5836, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

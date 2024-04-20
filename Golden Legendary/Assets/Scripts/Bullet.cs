@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
     //if coliision with enemy, deal damage
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
+        Debug.Log(hitInfo.name);
         EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
         if (enemy != null)
         {
@@ -39,7 +40,8 @@ public class Bullet : MonoBehaviour
         {
             return;
         }
-        else{
+        else
+        {
             Destroy(gameObject);
         }
     }
