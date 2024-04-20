@@ -41,11 +41,8 @@ public class EnemyManager : MonoBehaviour
             //remove the enemy.points from the wave points in the game manager
             GameManager.instance.wavePoints -= enemy.points;
 
-
-
             // Instantiate the enemy and get a reference to the new instance and spawn it at a random position on the "Background"
-            GameObject enemyInstance = Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)), Quaternion.identity);
-
+            GameObject enemyInstance = Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0), Quaternion.identity);
             // Get the EnemyScript component of the new instance and modify its stats
             EnemyScript enemyScript = enemyInstance.GetComponent<EnemyScript>();
             enemyScript.health = enemy.health;
@@ -60,12 +57,35 @@ public class EnemyManager : MonoBehaviour
             //wait for the waitTime before spawning the next enemy
             yield return new WaitForSeconds(waitTime);
         }
+
+        //start the coroutine to check if all the enemies are ded
+        StartCoroutine(CheckIfAllEnemiesAreDead());
+
+        //when the wave points are 0 stop the coroutine
+        StopCoroutine(SpawnEnemyCoroutine(2f));
+
     
     }
 
     public void StartWave()
     {
         StartCoroutine(SpawnEnemyCoroutine(2f));
+    }
+
+    //Coroutine to watch if all the enemies are dead
+    public IEnumerator CheckIfAllEnemiesAreDead()
+    {
+        //while there are enemies in the scene
+        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+        {
+            //wait for 1 second before checking again
+            yield return new WaitForSeconds(1f);
+        }
+
+        Debug.Log("All enemies are dead");
+        //when there are no enemies in the scene change the game state to shop
+        GameManager.instance.currentGameState = GameManager.GameState.Shop;
+        GameManager.instance.hasWaveStarted = false;
     }
 
 
