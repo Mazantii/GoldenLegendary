@@ -409,9 +409,7 @@ MonoBehaviour:
   dodgeRate: 0
   CritRate: 0
   CritDamage: 2
-  currentWeapons:
-  - {fileID: 11400000, guid: d15f7e400fba2f24aaca570c33c88b3e, type: 2}
-  - {fileID: 11400000, guid: 87f6b3dd3a3a4b34483230c844151c75, type: 2}
+  currentWeapons: []
 --- !u!1 &1318783720
 GameObject:
   m_ObjectHideFlags: 0

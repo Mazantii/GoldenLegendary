@@ -6,8 +6,13 @@ using UnityEngine;
 
 public class RangeWeaponScript : ScriptableObject
 {
+    [SerializeField]
+    private GameObject bulletPrefab;
 
-    public GameObject bulletPrefab;
+    void Awake()
+    {
+        bulletPrefab = Resources.Load<GameObject>("Assets/Prefabs/BulletPrefab");
+    }
 
     //stats for the ranged weapon
     public string weaponName;
