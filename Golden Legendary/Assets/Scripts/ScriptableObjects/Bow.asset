@@ -20,7 +20,7 @@ MonoBehaviour:
   bulletLifeTime: 3
   criticalChance: 1
   criticalMultiplier: 1
-  explosive: 1
+  explosive: 0
   piercing: 0
   chaining: 0
   hooming: 0

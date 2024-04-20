@@ -24,12 +24,30 @@ public class Bullet : MonoBehaviour
         
     }
 
+    private List<EnemyScript> hitEnemies = new List<EnemyScript>();
+    private EnemyScript currentTarget = null;
+
     // fixed update is called every frame
-    void FixedUpdate()
+void FixedUpdate()
+{
+    if (hooming)
+    {
+        if (currentTarget == null)
+        {
+            Homing();
+        }
+        else
+        {
+            // If there's a current target, move towards it
+            float step = speed * Time.deltaTime; // calculate distance to move
+            transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, step);
+        }
+    }
+    else
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
-        
     }
+}
     
     //if coliision with enemy, deal damage
     void OnTriggerEnter2D(Collider2D hitInfo)
@@ -38,7 +56,11 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.health -= damage;	
-            //Debug.Log("auch");
+            
+            hitEnemies.Add(enemy);
+
+            // Home in on the next enemy
+            currentTarget = null;
         }
         
         //if explosive, explode
@@ -51,6 +73,8 @@ public class Bullet : MonoBehaviour
         {
             Chaining(hitInfo, 5);
         }
+
+
         
         //if piercing, keep going
         if (piercing)
@@ -82,12 +106,6 @@ void Explosive(Vector3 position)
     // Destroy the explosion effect after 2 seconds
     Destroy(explosionEffect, 0.1f);
 }
-
-    void Piercing()
-    {
-        //piercing effect
-        
-    }
 
 void Chaining(Collider2D originalTarget, int remainingChains, List<EnemyScript> hitEnemies = null)
 {
@@ -150,14 +168,47 @@ void Chaining(Collider2D originalTarget, int remainingChains, List<EnemyScript> 
     }
 }
 
+void Homing()
+{
+    // Get all enemies in the scene
+    EnemyScript[] allEnemies = FindObjectsOfType<EnemyScript>();
 
-
-
-
-    void Hooming()
+    if (allEnemies.Length == 0)
     {
-        //hooming effect
+        // If there are no enemies left, stop homing and return
+        hooming = false;
+        return;
     }
+
+    EnemyScript nearestEnemy = null;
+    float minDistance = float.MaxValue;
+    foreach (EnemyScript enemy in allEnemies)
+    {
+        // Skip this enemy if it has already been hit
+        if (hitEnemies.Contains(enemy))
+        {
+            continue;
+        }
+
+        float distance = Vector2.Distance(transform.position, enemy.transform.position);
+        if (distance < minDistance)
+        {
+            nearestEnemy = enemy;
+            minDistance = distance;
+        }
+    }
+
+    // If an enemy was found, move towards it
+    if (nearestEnemy != null)
+    {
+        currentTarget = nearestEnemy;
+    }
+    else
+    {
+        // If no valid enemy was found, stop homing
+        hooming = false;
+    }
+}
 
     void Scatter()
     {
