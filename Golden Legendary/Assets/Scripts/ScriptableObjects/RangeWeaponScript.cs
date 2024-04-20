@@ -16,6 +16,8 @@ public class RangeWeaponScript : ScriptableObject
     public float bulletSpeed;
     public float bulletLifeTime;
 
+    public bool LightningMode = true; 
+
     //chose between single shot or burst fire in a dropdown menu
     public enum FireMode
     {
@@ -24,6 +26,7 @@ public class RangeWeaponScript : ScriptableObject
     }
 
     public FireMode fireMode;
-    
+
+
 
 }
