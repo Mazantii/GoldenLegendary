@@ -18,4 +18,5 @@ MonoBehaviour:
   fireRate: 9
   bulletSpeed: 90
   bulletLifeTime: 8097897
+  LightningMode: 1
   fireMode: 1
