@@ -12,10 +12,6 @@ public class WaveManager : MonoBehaviour
     public int waveNumber;
 
 
-
-    //here we have all the waves and the logic for the waves gamestate
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,28 +22,9 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.currentGameState == GameManager.GameState.Wave)
-        {
-            StartWave(GameManager.instance.wavePoints, GameManager.instance.waveNumber);
-        }
-        
     }
 
-    //make a corrutine to start the wave
-    public void StartWave(float wavePoints, int waveNumber)
-    {
-        this.wavePoints = wavePoints;
-        this.waveNumber = waveNumber;
-        StartCoroutine(StartWaveCoroutine());
-    }
+    //make a Corrutine that spawns enemies every 2 seconds and stops when the wave points are 0
 
-    IEnumerator StartWaveCoroutine()
-    {
-        gameManager.currentGameState = GameManager.GameState.Wave;
-
-        //when the last enemy is dead we will change the game state to shop
-        yield return new WaitUntil(() => EnemyManager.instance.enemies.Count == 0);
-        
-    }
 
 }

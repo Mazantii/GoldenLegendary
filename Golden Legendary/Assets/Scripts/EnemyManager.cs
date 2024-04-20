@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class EnemyManager : MonoBehaviour
 
     //a list with all the enemies where you can add the stats of the enemies
     public List<Enemy> enemies = new List<Enemy>();
+
+    bool spawn = true;
 
 
 
@@ -25,42 +28,45 @@ public class EnemyManager : MonoBehaviour
     }
 
     //function to get a random enemy from the list and spawn it at a random position but at most 100 units away from the player
-    public void SpawnEnemy()
+    public IEnumerator SpawnEnemyCoroutine(float waitTime)
     {
-
-        //get a random enemy from the list
-        Enemy enemy = enemies[Random.Range(0, enemies.Count)];
-
-
-        //while there are still points left in the wave we will spawn enemies
-        while(WaveManager.instance.wavePoints > 0)
+        Debug.Log("Spawning enemy");
+        //while the wave points are more than 0
+        while (GameManager.instance.wavePoints > 0)
         {
-            //instansiate the enemy
-            Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)), Quaternion.identity);
+            Debug.Log("Wave points: " + GameManager.instance.wavePoints);
+            //get a random enemy from the list
+            Enemy enemy = enemies[Random.Range(0, enemies.Count)];
 
-            //give the instance of the enemy the stats of the enemy
-            enemy.enemyPrefab.GetComponent<EnemyScript>().health = enemy.health;
-            enemy.enemyPrefab.GetComponent<EnemyScript>().speed = enemy.speed;
-            enemy.enemyPrefab.GetComponent<EnemyScript>().damage = enemy.damage;
-            enemy.enemyPrefab.GetComponent<EnemyScript>().critChance = enemy.critChance;
+            //remove the enemy.points from the wave points in the game manager
+            GameManager.instance.wavePoints -= enemy.points;
 
-            //remove the points of the enemy from the wave points
-            WaveManager.instance.wavePoints -= enemy.points;
+
+
+            // Instantiate the enemy and get a reference to the new instance and spawn it at a random position on the "Background"
+            GameObject enemyInstance = Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100)), Quaternion.identity);
+
+            // Get the EnemyScript component of the new instance and modify its stats
+            EnemyScript enemyScript = enemyInstance.GetComponent<EnemyScript>();
+            enemyScript.health = enemy.health;
+            enemyScript.speed = enemy.speed;
+            enemyScript.damage = enemy.damage;
+            enemyScript.critChance = enemy.critChance;
+            enemyScript.points = enemy.points;
+
+            //give the enemy the tag "Enemy"
+            enemyInstance.tag = "Enemy";
+
+            //wait for the waitTime before spawning the next enemy
+            yield return new WaitForSeconds(waitTime);
         }
-
-        //get a random position
-        Vector3 randomPosition = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
-
-        //if the random position is more than 100 units away from the player we will get a new random position
-        while (Vector3.Distance(randomPosition, GameObject.FindGameObjectWithTag("Player").transform.position) > 100)
-        {
-            randomPosition = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
-        }
-
-        //spawn the enemy with the stats of the random enemy at the random position
-
-    }
     
+    }
+
+    public void StartWave()
+    {
+        StartCoroutine(SpawnEnemyCoroutine(2f));
+    }
 
 
     //make a class for the enemies with stats
