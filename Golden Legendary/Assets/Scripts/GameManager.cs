@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //This script will be used to manage the game we use it to keep track of the Game state
-
+    [Header("Game State")]
     public static GameManager instance;
 
     public enum GameState
@@ -24,7 +25,19 @@ public class GameManager : MonoBehaviour
 
     public bool hasWaveStarted = false;
 
-    Vector2 playerPosition;
+    public Vector2 playerPosition;
+
+    [Header("Shop")]
+    public GameObject shopUI;
+    public GameObject blessing1;
+    public GameObject blessing1Description;
+    public GameObject blessing2;
+    public GameObject blessing2Description;
+    public GameObject blessing3;
+    public GameObject blessing3Description;
+
+
+    
 
 
     // Start is called before the first frame update
@@ -48,19 +61,46 @@ public class GameManager : MonoBehaviour
         //if the gamestate changes to wave start the wave once
         if (currentGameState == GameState.Wave && !hasWaveStarted)
         {
+            shopUI.SetActive(false);
             Debug.Log("Wave " + waveNumber + " has started");
             EnemyManager.instance.StartWave();
             hasWaveStarted = true;
         }
         if(currentGameState == GameState.Shop)
         {
-            waveNumber++;
-            //Den her skal gøres når man trykker op klar knappen
-            //wavePoints = maxWavePoints;
-            currentGameState = GameState.Wave;
+            hasWaveStarted = false;
+            //turn on the shop UI in the canvas
+            shopUI.SetActive(true);
+
+            //Get random tier blessings
+            BlessingAndCursesScript.Blessings blessingTier1 = BlessingAndCursesScript.instance.GetRandomTier1Blessing();
+            BlessingAndCursesScript.Blessings blessingTier2 = BlessingAndCursesScript.instance.GetRandomTier2Blessing();
+            BlessingAndCursesScript.Blessings blessingTier3 = BlessingAndCursesScript.instance.GetRandomTier3Blessing();
+            
+            Debug.Log("Blessing: " + blessingTier1.blessingName);
+
+            //set the blessingtext in the shop UI
+            blessing1.GetComponent<TextMeshProUGUI>().text = blessingTier1.blessingName;
+            blessing1Description.GetComponent<TextMeshProUGUI>().text = blessingTier1.blessingDescription;
+
+            blessing2.GetComponent<TextMeshProUGUI>().text = blessingTier2.blessingName;
+            blessing2Description.GetComponent<TextMeshProUGUI>().text = blessingTier2.blessingDescription;
+
+            blessing3.GetComponent<TextMeshProUGUI>().text = blessingTier3.blessingName;
+            blessing3Description.GetComponent<TextMeshProUGUI>().text = blessingTier3.blessingDescription;
+
         }
         
     }
+
+        //function that passes the name of the blessingTier1
+        public void BuyBlessing1()
+        {
+            BlessingAndCursesScript.Blessings blessingTier1 = BlessingAndCursesScript.instance.GetRandomTier1Blessing();
+            Debug.Log("Blessing: " + blessingTier1.blessingName);
+        }
+
+
 
     
 }
