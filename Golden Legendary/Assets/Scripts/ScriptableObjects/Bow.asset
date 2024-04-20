@@ -24,5 +24,5 @@ MonoBehaviour:
   piercing: 0
   chaining: 0
   hooming: 0
-  scatter: 0
+  scatter: 1
   fireMode: 0

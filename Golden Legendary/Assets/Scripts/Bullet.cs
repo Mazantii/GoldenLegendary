@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,15 @@ public class Bullet : MonoBehaviour
     public bool explosive, piercing, chaining, hooming, scatter;
 
     private GameObject explosionPrefab;
+    private GameObject bulletPrefab;
+    public Vector2 lastDirection;
+    public GameObject spawningTarget;
     
 
       void Awake()
     {
         explosionPrefab = Resources.Load<GameObject>("Prefabs/ExplosivePrefab");
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletPrefab");
     }
 
     // Start is called before the first frame update
@@ -30,6 +35,7 @@ public class Bullet : MonoBehaviour
     // fixed update is called every frame
 void FixedUpdate()
 {
+
     if (hooming)
     {
         if (currentTarget == null)
@@ -47,43 +53,63 @@ void FixedUpdate()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
+    
 }
     
     //if coliision with enemy, deal damage
-    void OnTriggerEnter2D(Collider2D hitInfo)
+void OnTriggerEnter2D(Collider2D hitInfo)
+{
+
+    if (hitInfo.gameObject == spawningTarget)
     {
-        EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
-        if (enemy != null)
+        // If it is, ignore this collision
+        return;
+    }
+
+    if (hitInfo.gameObject.CompareTag("Enemy"))
+    {
+        // If it is, set it as the last hit enemy
+        spawningTarget = hitInfo.gameObject;
+    }
+    
+    if (hitInfo.gameObject != spawningTarget)
         {
-            enemy.health -= damage;	
+            EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
+            if (enemy != null)
+            {
+                enemy.health -= damage;	
+                
+                hitEnemies.Add(enemy);
+
+                // Home in on the next enemy
+                currentTarget = null;
+            }
             
-            hitEnemies.Add(enemy);
+            //if explosive, explode
+            if (explosive)
+            {
+                Explosive(hitInfo.transform.position);
+            }
 
-            // Home in on the next enemy
-            currentTarget = null;
-        }
-        
-        //if explosive, explode
-        if (explosive)
-        {
-            Explosive(hitInfo.transform.position);
-        }
+            if (chaining)
+            {
+                Chaining(hitInfo, 5);
+            }
 
-        if (chaining)
-        {
-            Chaining(hitInfo, 5);
-        }
+            /*if (scatter)
+            {
+                Scatter();
+            }*/
 
-
-        
-        //if piercing, keep going
-        if (piercing)
-        {
-            return;
-        }
-        else
-        {
-            Destroy(gameObject);
+            //if piercing, keep going
+            if (piercing)
+            {
+                return;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -210,9 +236,36 @@ void Homing()
     }
 }
 
-    void Scatter()
+/*void Scatter()
+{
+    Debug.Log("Scatter");
+    // Directions for the scatter shots
+    Vector2[] directions = new Vector2[]
     {
-        //scatter effect
+        Vector2.up,
+        Vector2.down,
+        Vector2.left,
+        Vector2.right
+    };
+    foreach (Vector2 direction in directions)
+    {
+        Debug.Log("Scattering");
+        // Instantiate a new bullet and set its direction
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + (Vector3)direction * 0.1f, Quaternion.identity);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.lastDirection = direction;
+        bulletScript.hooming = false; // Prevent the new bullet from homing
+        bulletScript.spawningTarget = this.gameObject;; // Set the spawning target to the current bullet
+        bulletScript.speed = speed;
+        bulletScript.lifeTime = lifeTime;
+        bulletScript.damage = damage;
+        bulletScript.criticalChance = criticalChance;
+        bulletScript.criticalMultiplier = criticalMultiplier;
+        bulletScript.explosive = explosive;
+        bulletScript.piercing = piercing;
+        bulletScript.chaining = chaining;
+        bulletScript.scatter = false;
     }
+}*/
 
 }
