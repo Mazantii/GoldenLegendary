@@ -33,18 +33,43 @@ public class RangeWeaponScript : ScriptableObject
 //instansiates a bullet with the stats of the weapon
     public void Shoot(Transform firePoint)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.speed = bulletSpeed;
-        bulletScript.lifeTime = bulletLifeTime;
-        bulletScript.damage = damage;
-        bulletScript.criticalChance = criticalChance;
-        bulletScript.criticalMultiplier = criticalMultiplier;
-        bulletScript.explosive = explosive;
-        bulletScript.piercing = piercing;
-        bulletScript.chaining = chaining;
-        bulletScript.hooming = hooming;
-        bulletScript.scatter = scatter;
+    // Get all enemies
+    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+    // Find the nearest enemy
+    GameObject nearestEnemy = null;
+    float minDistance = Mathf.Infinity;
+    foreach (GameObject enemy in enemies)
+    {
+        float distance = Vector2.Distance(firePoint.position, enemy.transform.position);
+        if (distance < minDistance)
+        {
+            minDistance = distance;
+            nearestEnemy = enemy;
+        }
     }
 
+    // Calculate the rotation
+    float rotation;
+    if (nearestEnemy != null)
+    {
+        // If there's at least one enemy, calculate the direction towards the nearest enemy
+        Vector2 direction = nearestEnemy.transform.position - firePoint.position;
+        rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    }
+    else
+    {
+        // If there are no enemies, calculate a random rotation
+        rotation = Random.Range(0, 360);
+    }
+
+    // Instantiate the bullet
+    GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0, 0, rotation));
+    Bullet bulletScript = bullet.GetComponent<Bullet>();
+    bulletScript.speed = bulletSpeed;
+    bulletScript.lifeTime = bulletLifeTime;
+    bulletScript.damage = damage;
+    bulletScript.criticalChance = criticalChance;
+    bulletScript.criticalMultiplier = criticalMultiplier;
+}
 }

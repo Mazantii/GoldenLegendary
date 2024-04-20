@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4668474802506057664, guid: bdd3774349db0684d9c67bb6809aa7a8, type: 3}
-  weaponName: 
+  weaponName: bow
   damage: 1
   fireRate: 1
   bulletSpeed: 1
