@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Golden Legendary/Assets/Scripts/Bullet.cs.meta
-guid: b81c4984b0585734389a668ab565447c
+<<<<<<<< HEAD:Golden Legendary/Assets/Scripts/Stab.cs.meta
+guid: 1d66d26e9f34de64ea9d79845d342e72
 ========
-guid: 8f36d44438a56a248b1c3e64c6dae69e
->>>>>>>> main:Golden Legendary/Assets/Scripts/EnemyManager.cs.meta
+guid: a25f0cac3bfe0e2469f4172a6684862c
+>>>>>>>> main:Golden Legendary/Assets/Scripts/EnemyScript.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
