@@ -8,6 +8,10 @@ public class BlessingAndCursesScript : MonoBehaviour
     public List<Blessings> blessings = new List<Blessings>();
     public List<Curses> curses = new List<Curses>();
 
+    //list with weapons
+    public List<RangeWeaponScript> rangedWeapons = new List<RangeWeaponScript>();
+    public List<MeleeWeaponScript> meleeWeapons = new List<MeleeWeaponScript>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,23 +90,62 @@ public class BlessingAndCursesScript : MonoBehaviour
 
     public void ActivateBlessing(string blessingName)
     {
-        Debug.Log("Hejsa");
+        Debug.Log(blessingName);
         if(blessingName == "Healing Touch"){
             ActivateHealingTouch();
         }
 
-
+        if(blessingName == "Glory of Artemis"){
+            ActivateGoryOfArtemis();
+        }
 
     }
 
     public void ActivateHealingTouch()
     {
-        //give the player +5 health
-        
-        
+        Debug.Log("Healing Touch Activated");
 
+        //give the player + 5 health
+        PlayerStats.instance.maxHealth += 5;
+
+        //add the blessing to the player stats list of blessings
+        PlayerStats.instance.blessings.Add("Healing Touch");
+
+        //Get appropriate amount of curses
+        //AddCurse(1);
+    }
+
+    public void ActivateGoryOfArtemis()
+    {
+        Debug.Log("Glory of Artemis Activated");
+
+        //add the blessing to the player stats list of blessings
+        PlayerStats.instance.blessings.Add("Glory of Artemis");
+
+        //add the first element of the ranged weapons list to the current ranged weapons list of the player
+        PlayerStats.instance.currentRangedWeapons.Add(rangedWeapons[0]);
+
+
+        //Get appropriate amount of curses
+        //AddCurse(3);
+    }
+
+    public void AddCurse(int amount)
+    {
+
+        List<Curses> cursesToAdd = new List<Curses>();
+
+        //add a curse to the player stats for each amount then minus -1 from the amount
+        for (int i = 0; i < amount; i++)
+        {
+            foreach (Curses curse in curses)
+            {
+                cursesToAdd.Add(curse);
+            }
+            PlayerStats.instance.curses.Add(cursesToAdd[Random.Range(0, cursesToAdd.Count)].curseName);
+            amount--;
+        }
 
     }
-    
 
 }

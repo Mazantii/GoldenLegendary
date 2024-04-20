@@ -23,6 +23,11 @@ public class EnemyScript : MonoBehaviour
     void FixedUpdate()
     {
         MoveTowardsPlayer();
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     //Function to walk towards the player 

@@ -42,7 +42,7 @@ public class EnemyManager : MonoBehaviour
             GameManager.instance.wavePoints -= enemy.points;
 
             // Instantiate the enemy and get a reference to the new instance and spawn it at a random position on the "Background"
-            GameObject enemyInstance = Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0), Quaternion.identity);
+            GameObject enemyInstance = Instantiate(enemy.enemyPrefab, new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), Quaternion.identity);
             // Get the EnemyScript component of the new instance and modify its stats
             EnemyScript enemyScript = enemyInstance.GetComponent<EnemyScript>();
             enemyScript.health = enemy.health;
