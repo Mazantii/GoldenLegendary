@@ -68,7 +68,8 @@ public class RangeWeaponScript : ScriptableObject
     Bullet bulletScript = bullet.GetComponent<Bullet>();
     bulletScript.speed = bulletSpeed;
     bulletScript.lifeTime = bulletLifeTime;
-    bulletScript.damage = damage;
+    //modify by the players damage stat
+    bulletScript.damage = damage * PlayerStats.instance.damage;
     bulletScript.criticalChance = criticalChance;
     bulletScript.criticalMultiplier = criticalMultiplier;
     bulletScript.explosive = explosive;
