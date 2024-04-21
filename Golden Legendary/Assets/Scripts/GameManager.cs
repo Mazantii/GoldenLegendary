@@ -196,14 +196,14 @@ public class GameManager : MonoBehaviour
             foreach (string blessing in PlayerStats.instance.blessings)
             {
                 //Display the blessing in the UI
-                blessingsList.GetComponent<TextMeshProUGUI>().text += blessing + "\n"; 
+                blessingsList.GetComponent<TextMeshProUGUI>().text += blessing + "\n" + "\n"; 
             }
 
             //same with curses
             foreach (string curse in PlayerStats.instance.curses)
             {
                 //Display the curse in the UI
-                cursesList.GetComponent<TextMeshProUGUI>().text += curse + "\n"; 
+                cursesList.GetComponent<TextMeshProUGUI>().text += curse + "\n" + "\n"; 
             }
         }
 
