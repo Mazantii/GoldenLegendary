@@ -143,8 +143,6 @@ public class BlessingAndCursesScript : MonoBehaviour
             //+ 25% Damage
             ActivateStrengthOfZeus();
         }
-
-
     }
 
     public void ActivateCurse(string curseName)
@@ -173,8 +171,6 @@ public class BlessingAndCursesScript : MonoBehaviour
             //15% slower movement
             ActivateLimpLimbVex();
         }
-
-
     }
 
 
@@ -350,21 +346,12 @@ public class BlessingAndCursesScript : MonoBehaviour
         //add a curse to the player stats for each amount then minus -1 from the amount
         for (int i = 0; i < amount; i++)
         {
-            foreach (Curses curse in curses)
-            {
-                //add a random curse to the list of curses to add
-                if (Random.Range(0, 2) == 0)
-                {
-                    cursesToAdd.Add(curse);
-                }
-            }
-            amount--;
-        }
+            //add a random curse to the list of curses to add
+            int randomIndex = Random.Range(0, curses.Count);
+            cursesToAdd.Add(curses[randomIndex]);
 
-        //activate the curses
-        foreach (Curses curse in cursesToAdd)
-        {
-            ActivateCurse(curse.curseName);
+            //activate the curse
+            ActivateCurse(curses[randomIndex].curseName);
         }
 
     }
