@@ -56,8 +56,8 @@ public class EnemyManager : MonoBehaviour
                 bossScript.critChance = boss.critChance;
                 bossScript.points = boss.points;
 
-                //give the boss the tag "Boss"
-                bossInstance.tag = "Boss";
+                //give the boss the tag "Enemy"
+                bossInstance.tag = "Enemy";
 
                 //wait for the waitTime before spawning the next boss
                 yield return new WaitForSeconds(waitTime);

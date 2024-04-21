@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public GameObject cursesList;
     public GameObject startButton;
     public GameObject waveNumberText;
+    public GameObject quitButton;
 
     [Header("Game Over")]
     public GameObject GameOverText;
@@ -220,6 +221,12 @@ public class GameManager : MonoBehaviour
         public void RestartGame(){
             //reload the scene
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+
+        public void QuitGame()
+        {
+            //quit the game
+            Application.Quit();
         }
     
 }
