@@ -15,12 +15,11 @@ public class Stab : MonoBehaviour
     //deals damage to the enemy
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        /*Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-        Destroy(gameObject);*/
+        EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
+            if (enemy != null)
+            {
+                enemy.health -= damage;	
+            }
     }
 
     void Explosive()

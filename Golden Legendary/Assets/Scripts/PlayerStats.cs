@@ -6,11 +6,11 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int health = 100;
-    public int maxHealth = 100;
-    public int damage = 1;
+    public float health = 100;
+    public float maxHealth = 100;
+    public float damage = 1;
     public int fireRate = 1;
-    public int speed = 5;
+    public float speed = 5;
     public float dodgeRate = 0f;
     public float CritRate = 0f;
     public int CritDamage = 2;
@@ -46,10 +46,23 @@ public class PlayerStats : MonoBehaviour
     {
         while (true)
         {
+            //if the weapons to add list is not empty, then add those weapons to the current ranged weapons list
+            if(GameManager.instance.rangedWeaponsToAdd.Count > 0)
+            {
+                foreach (var weaponToAdd in GameManager.instance.rangedWeaponsToAdd)
+                {
+                    currentRangedWeapons.Add(weaponToAdd);
+                }
+
+                //then clear the list of ranged weapons to add
+                GameManager.instance.rangedWeaponsToAdd.Clear();
+            }
             foreach (var weapon in currentRangedWeapons)
             {
                 weapon.Shoot(firePoint);
-                yield return new WaitForSeconds(1f / weapon.fireRate);
+                //random number between 0 and 1
+                float waitTime = UnityEngine.Random.Range(0f, 1f);
+                yield return new WaitForSeconds(waitTime / weapon.fireRate);
             }
         }
     }
@@ -74,12 +87,14 @@ public class PlayerStats : MonoBehaviour
 
 
     //run this function when the player takes damage
-    public void TakeDamage(int damage) //take damage from enemy
+    public void TakeDamage(float damage) //take damage from enemy
     {
         health -= damage;
         if (health <= 0)
         {
-            //Die code here
+            //Change the game state to game over
+            GameManager.instance.currentGameState = GameManager.GameState.GameOver;
+            
         }
     }
 

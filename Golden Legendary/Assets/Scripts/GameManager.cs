@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         Start,
         Wave,
         Shop,
+        GameOver
     }
 
     public GameState currentGameState;
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
     public WaveManager waveManager;
     public float maxWavePoints;
     public float wavePoints = 100;
-    public int waveNumber = 1;
+    public int waveNumber = 0;
 
     public bool hasWaveStarted = false;
     public bool haveRolledBlessings = false;
@@ -40,12 +41,15 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GameObject blessingsList;
     public GameObject cursesList;
-
     public GameObject startButton;
+    public GameObject waveNumberText;
 
+    [Header("Game Over")]
+    public GameObject GameOverText;
+    public GameObject GameOverTitle;
 
-
-    
+    //list of ranged weapons
+    public List<RangeWeaponScript> rangedWeaponsToAdd = new List<RangeWeaponScript>();
 
 
     // Start is called before the first frame update
@@ -54,6 +58,9 @@ public class GameManager : MonoBehaviour
         instance = this;
         currentGameState = GameState.Start;
         maxWavePoints = wavePoints;
+
+        //disable the gameoverTitle
+        GameOverTitle.SetActive(false);
     }
 
     // Update is called once per frame
@@ -71,22 +78,27 @@ public class GameManager : MonoBehaviour
         //if the gamestate changes to wave start the wave once
         if (currentGameState == GameState.Wave && !hasWaveStarted)
         {
+            //give the player the max health
+            PlayerStats.instance.health = PlayerStats.instance.maxHealth;
             shopUI.SetActive(false);
             GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
             Debug.Log("Wave " + waveNumber + " has started");
             EnemyManager.instance.StartWave();
             hasWaveStarted = true;
             haveRolledBlessings = false;
+
+            //update the wave number text
+            waveNumberText.GetComponent<TextMeshProUGUI>().text = "Wave: " + waveNumber;
         }
         if(currentGameState == GameState.Shop)
         {
-            
             hasWaveStarted = false;
             //turn on the shop UI in the canvas
             shopUI.SetActive(true);
 
             if (!haveRolledBlessings)
             {
+
                 //Get random tier blessings
                 BlessingAndCursesScript.Blessings blessingTier1 = BlessingAndCursesScript.instance.GetRandomTier1Blessing();
                 BlessingAndCursesScript.Blessings blessingTier2 = BlessingAndCursesScript.instance.GetRandomTier2Blessing();
@@ -106,6 +118,20 @@ public class GameManager : MonoBehaviour
                     
                 haveRolledBlessings = true;
             }
+
+        }
+
+        if (currentGameState == GameState.GameOver)
+        {
+            //disable the player movement script
+            GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
+
+            //display the game over text
+            GameOverTitle.SetActive(true);
+
+            //Change the Game Over text to display the wave number and how many curses the player had accumulated
+            GameOverText.GetComponent<TextMeshProUGUI>().text = "Wave: " + waveNumber + "\nCurses: " + PlayerStats.instance.curses.Count;
+
 
         }
         
@@ -188,8 +214,12 @@ public class GameManager : MonoBehaviour
 
             //disable the start button
             startButton.SetActive(false);
-
             
+        }
+
+        public void RestartGame(){
+            //reload the scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
     
 }

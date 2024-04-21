@@ -59,58 +59,49 @@ void FixedUpdate()
     //if coliision with enemy, deal damage
 void OnTriggerEnter2D(Collider2D hitInfo)
 {
-
-    if (hitInfo.gameObject == spawningTarget)
-    {
-        // If it is, ignore this collision
-        return;
-    }
-
-    if (hitInfo.gameObject.CompareTag("Enemy"))
-    {
-        // If it is, set it as the last hit enemy
-        spawningTarget = hitInfo.gameObject;
-    }
     
-    if (hitInfo.gameObject != spawningTarget)
+    
+        EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
+
+        //if colliding with the player ignore
+        if (hitInfo.tag == "Player")
         {
-            EnemyScript enemy = hitInfo.GetComponent<EnemyScript>();
-            if (enemy != null)
-            {
-                enemy.health -= damage;	
-                
-                hitEnemies.Add(enemy);
-
-                // Home in on the next enemy
-                currentTarget = null;
-            }
-            
-            //if explosive, explode
-            if (explosive)
-            {
-                Explosive(hitInfo.transform.position);
-            }
-
-            if (chaining)
-            {
-                Chaining(hitInfo, 5);
-            }
-
-            /*if (scatter)
-            {
-                Scatter();
-            }*/
-
-            //if piercing, keep going
-            if (piercing)
-            {
-                return;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            return;
         }
+
+        if (enemy != null)
+        {
+            enemy.health -= damage;	
+                
+            hitEnemies.Add(enemy);
+
+            // Home in on the next enemy
+            currentTarget = null;
+        }
+            
+        //if explosive, explode
+        if (explosive)
+        {
+            Explosive(hitInfo.transform.position);
+        }
+
+        if (chaining)
+        {
+            Chaining(hitInfo, 5);
+        }
+
+
+
+        //if piercing, keep going
+         if (piercing)
+        {
+         return;
+        }
+        else
+        {
+         Destroy(gameObject);
+        }
+        
     }
 
 void Explosive(Vector3 position)

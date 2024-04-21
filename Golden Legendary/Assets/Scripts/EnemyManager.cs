@@ -9,6 +9,9 @@ public class EnemyManager : MonoBehaviour
 
     //a list with all the enemies where you can add the stats of the enemies
     public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> bosses = new List<Enemy>();
+
+    public float waitTimeBetweenSpawn = 1f;
 
     bool spawn = true;
 
@@ -61,6 +64,9 @@ public class EnemyManager : MonoBehaviour
         //start the coroutine to check if all the enemies are ded
         StartCoroutine(CheckIfAllEnemiesAreDead());
 
+        //update the wave number
+        GameManager.instance.waveNumber++;
+
         //when the wave points are 0 stop the coroutine
         StopCoroutine(SpawnEnemyCoroutine(2f));
 
@@ -69,7 +75,7 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
-        StartCoroutine(SpawnEnemyCoroutine(2f));
+        StartCoroutine(SpawnEnemyCoroutine(waitTimeBetweenSpawn));
     }
 
     //Coroutine to watch if all the enemies are dead
