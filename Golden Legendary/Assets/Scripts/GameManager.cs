@@ -49,6 +49,10 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverText;
     public GameObject GameOverTitle;
 
+    [Header("Music")]
+    public AudioSource battleMusic;
+    public AudioSource shopMusic;
+
     //list of ranged weapons
     public List<RangeWeaponScript> rangedWeaponsToAdd = new List<RangeWeaponScript>();
 
@@ -56,6 +60,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //play the battle music
+        shopMusic.Play();
+        shopMusic.Pause();
+        battleMusic.Play();
         instance = this;
         currentGameState = GameState.Start;
         maxWavePoints = wavePoints;
@@ -79,6 +87,9 @@ public class GameManager : MonoBehaviour
         //if the gamestate changes to wave start the wave once
         if (currentGameState == GameState.Wave && !hasWaveStarted)
         {
+            shopMusic.Pause();
+            battleMusic.UnPause();
+
             //give the player the max health
             PlayerStats.instance.health = PlayerStats.instance.maxHealth;
             shopUI.SetActive(false);
@@ -93,6 +104,8 @@ public class GameManager : MonoBehaviour
         }
         if(currentGameState == GameState.Shop)
         {
+            battleMusic.Pause();
+            shopMusic.UnPause();
             hasWaveStarted = false;
             //turn on the shop UI in the canvas
             shopUI.SetActive(true);
@@ -219,6 +232,17 @@ public class GameManager : MonoBehaviour
         }
 
         public void RestartGame(){
+            //Set the players ranged weapons explosive to false
+            foreach (var weapon in PlayerStats.instance.currentRangedWeapons)
+            {
+                weapon.explosive = false;
+                weapon.piercing = false;
+                weapon.chaining = false;
+                weapon.hooming = false;
+
+            }
+
+
             //reload the scene
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }

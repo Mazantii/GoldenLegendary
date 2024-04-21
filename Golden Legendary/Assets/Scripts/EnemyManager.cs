@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy> bosses = new List<Enemy>();
 
-    public float waitTimeBetweenSpawn = 1f;
+    public float waitTimeBetweenSpawn = 0.1f;
 
     bool spawn = true;
 
