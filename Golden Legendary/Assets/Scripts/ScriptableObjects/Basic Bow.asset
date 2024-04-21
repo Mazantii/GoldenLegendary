@@ -15,7 +15,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4668474802506057664, guid: bdd3774349db0684d9c67bb6809aa7a8, type: 3}
   weaponName: Basic Bow
   damage: 5
-  fireRate: 0.5
+  fireRate: 1
   bulletSpeed: 4
   bulletLifeTime: 2
   criticalChance: 0

@@ -2668,7 +2668,7 @@ MonoBehaviour:
   maxHealth: 100
   damage: 1
   fireRate: 1
-  speed: 6
+  speed: 9
   dodgeRate: 0
   CritRate: 0
   CritDamage: 2
@@ -2736,7 +2736,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.110201865, y: -0.07733461}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2747,7 +2747,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.19958645, y: 0.4277237}
   m_EdgeRadius: 0
 --- !u!4 &1023062965 stripped
 Transform:
@@ -4403,20 +4403,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - health: 10
+  - health: 5
     speed: 4
     damage: 10
-    points: 25
+    points: 2
     critChance: 0
     enemyPrefab: {fileID: 4788830528414944978, guid: edd725751c3c0a648bd055822a8c5836, type: 3}
   bosses:
-  - health: 250
+  - health: 100
     speed: 5
     damage: 25
-    points: 100
+    points: 75
     critChance: 0
     enemyPrefab: {fileID: 4934692626058442058, guid: 4b8368e56948153448234f4cec0f9772, type: 3}
-  waitTimeBetweenSpawn: 1
+  waitTimeBetweenSpawn: 0.25
 --- !u!1 &1438893738
 GameObject:
   m_ObjectHideFlags: 0
